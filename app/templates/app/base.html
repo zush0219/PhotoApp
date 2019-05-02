@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>写真投稿サイト</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+<header>
+    <div class="container">
+        <h1><a href="{% url 'app:index' %}">写真投稿サイト</a></h1>
+        <div class="header-menu">
+            <a href="{% url 'app:photos_new' %}">投稿</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'app:users_detail' request.user.id %}">マイページ</a>
+            <a href="{% url 'accounts:logout' %}">ログアウト</a>
+            {% else %}
+            <a href="{% url 'accounts:register' %}">新規登録</a>
+            <a href="{% url 'accounts:login' %}">ログイン</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    {% for message in messages %}
+    <p class="message-success">{{ message }}</p>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+
+</html>
