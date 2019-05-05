@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Photo, Category, Icon
+from .models import Photo, Category, Icon, Comment
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -16,6 +16,11 @@ class IconAdmin(admin.ModelAdmin):
     list_display = ('user', 'image')
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'text')
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Icon, IconAdmin)
+admin.site.register(Comment, CommentAdmin)

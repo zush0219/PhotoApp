@@ -121,3 +121,7 @@ header h1 {
     display:inline-block;
     vertical-align: middle;
 }
+
+.comment-text {
+    margin-left: 20px;
+}

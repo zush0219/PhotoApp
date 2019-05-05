@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
-from .models import Photo, Category, Icon
+from .models import Photo, Category, Icon, Comment
 from django.contrib.auth.decorators import login_required
-from .forms import PhotoForm, IconForm
+from .forms import PhotoForm, IconForm, CommentForm
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 
 def index(request):
@@ -38,7 +39,24 @@ def photos_new(request):
 
 def photos_detail(request, pk):
     photo = get_object_or_404(Photo, pk=pk)
-    return render(request, 'app/photos_detail.html', {'photo': photo})
+    comments = Comment.objects.filter(photo=photo)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.photo = photo
+            new_comment.user = request.user
+            new_comment.save()
+        return redirect('app:photos_detail', pk=pk)
+    else:
+        form = CommentForm()
+
+    return render(request, 'app/photos_detail.html', {
+        'photo': photo,
+        'comments': comments,
+        'form': form,
+    })
 
 
 @require_POST
@@ -69,4 +87,18 @@ def icon_new(request):
         return redirect('app:users_detail', pk=request.user.pk)
     else:
         form = IconForm()
-    return render(request, 'app/icon_new.html', {'form': form})
+
+    return render(request, 'app/icon_new.html', {
+        'form': form,
+    })
+
+
+# @require_POST
+# @login_required
+# def comments_add(request, pk):
+#
+#     new_comment = Comment.objects.create(user=request.user, text=text)
+#     new_comment.photo = get_object_or_404(Photo, pk=pk)
+#     new_comment.save()
+#
+#     return redirect('app:photos_detail', request.user.id)

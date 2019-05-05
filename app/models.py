@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class Photo(models.Model):
     title = models.CharField(max_length=150)
-    comment = models.TextField(blank=True)
+    description = models.TextField(blank=True)
     image = models.ImageField(upload_to='photos')
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,3 +24,9 @@ class Photo(models.Model):
 class Icon(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='icons')
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    text = models.TextField(max_length=140)

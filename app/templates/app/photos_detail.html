@@ -4,26 +4,44 @@
 
 <div class="photo-detail">
 
-<img src="{{ photo.image.url }}" class="photo-img">
-    <a href="{% url 'app:users_detail' photo.user.id %}">
-        <div class="photo-info">
-            <div class="icon-and-name">
-                <p><img src="{{ photo.user.icon.image.url }}" class="icon-img"></p>
-                <p>{{ photo.user.username }}</p>
+    <img src="{{ photo.image.url }}" class="photo-img">
+        <a href="{% url 'app:users_detail' photo.user.id %}">
+            <div class="photo-info">
+                <div class="icon-and-name">
+                    <p><img src="{{ photo.user.icon.image.url }}" class="icon-img"></p>
+                    <p>{{ photo.user.username }}</p>
+                </div>
             </div>
+        </a>
+
+    <h2>{{ photo.title }}</h2>
+    <p>{{ photo.description }}</p>
+
+    <div id="comments">
+        {% for comment in comments %}
+        <div>
+            <div class="icon-and-name">
+                <p><img src="{{ comment.user.icon.image.url }}" class="icon-img"></p>
+                <p>{{ comment.user }}</p>
+            </div>
+            <p class="comment-text">{{ comment.text }}</p>
         </div>
-    </a>
+        {% endfor %}
+    </div>
 
-<h2>{{ photo.title }}</h2>
-<p>{{ photo.comment }}</p>
-
-<!-- 削除ボタン　-->
-{% if request.user == photo.user %}
-<form method="post" action="{% url 'app:photos_delete' photo.id %}">{% csrf_token %}
-    <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
-</form>
-{% endif %}
+    <!-- 削除ボタン　-->
+    {% if request.user == photo.user %}
+        <form method="post" action="{% url 'app:photos_delete' photo.id %}">{% csrf_token %}
+            <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
+        </form>
+    {% else %}
+        <form id="comments-add" action="{% url 'app:photos_detail' photo.id %}" method="POST">
+            <p>コメント:<p>
+            {% csrf_token %}
+            {{ form.text }}
+            <button type="submit" class="btn">送信</button>
+        </form>
+    {% endif %}
 
 </div>
 {% endblock %}
-        
