@@ -9,9 +9,7 @@
             <a href="{% url 'app:users_detail' photo.user.id %}">
                 <div class="icon-and-name">
                     <p><img src="{{ photo.user.icon.image.url }}" class="icon-img"></p>
-                    <p>
-                        {{ photo.user }}
-                    </p>
+                    <p>{{ photo.user }}</p>
                 </div>
             </a>
         </div>
