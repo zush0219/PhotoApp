@@ -102,3 +102,22 @@ header h1 {
     padding-left: 30px;
     border-radius: 4px;
 }
+
+.icon-img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 1px solid ;
+}
+
+.photo-info .icon-img {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid ;
+}
+
+.icon-and-name p {
+    display:inline-block;
+    vertical-align: middle;
+}

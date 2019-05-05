@@ -2,18 +2,26 @@
 
 {% block content %}
 
-<h2 class="user-name">@{{ user.username }}</h2>
+<div id="user_detail">
 
-{% if photos.count != 0 %}
-    <p>投稿<strong>{{ photos.count }}</strong>件</p>
-{% else %}
-    {% if user == request.user %}
-        <p>初めての投稿をしてみましょう！</p>
+    <div class="icon-and-name">
+        <p><img src="{{ user.icon.image.url }}" class="icon-img"></p>
+        <p class="user-name">
+            {{ user.username }}
+        </p>
+    </div>
+
+    {% if photos.count != 0 %}
+        <p>投稿<strong>{{ photos.count }}</strong>件</p>
     {% else %}
-        <p>@{{ user.username }}さんはまだ投稿していません。</p>
+        {% if user == request.user %}
+            <p>初めての投稿をしてみましょう！</p>
+        {% else %}
+            <p>@{{ user.username }}さんはまだ投稿していません。</p>
+        {% endif %}
     {% endif %}
-{% endif %}
 
+</div>
 {% include 'app/photos_list.html' %}
 
 {% endblock %}

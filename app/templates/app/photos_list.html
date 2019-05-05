@@ -6,7 +6,14 @@
         </a>
         <div class="photo-info">
             <a href="{% url 'app:photos_category' category=photo.category %}" class="category">{{ photo.category }}</a>
-            <a href="{% url 'app:users_detail' photo.user.id %}">@{{ photo.user }}</a>
+            <a href="{% url 'app:users_detail' photo.user.id %}">
+                <div class="icon-and-name">
+                    <p><img src="{{ photo.user.icon.image.url }}" class="icon-img"></p>
+                    <p>
+                        {{ photo.user }}
+                    </p>
+                </div>
+            </a>
         </div>
     </div>
 {% endfor %}
