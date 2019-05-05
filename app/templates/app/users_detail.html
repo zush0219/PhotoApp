@@ -5,7 +5,14 @@
 <div id="user_detail">
 
     <div class="icon-and-name">
-        <p><img src="{{ user.icon.image.url }}" class="icon-img"></p>
+        {% if user == request.user %}
+        <a href="{% url 'app:icon_new' %}">
+            <p><img src="{{ user.icon.image.url }}" class="icon-img"></p>
+        </a>
+        {% else  %}
+            <p><img src="{{ user.icon.image.url }}" class="icon-img"></p>
+        {% endif %}
+
         <p class="user-name">
             {{ user.username }}
         </p>

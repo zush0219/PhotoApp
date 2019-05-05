@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
-from .models import Photo, Category
+from .models import Photo, Category, Icon
 from django.contrib.auth.decorators import login_required
-from .forms import PhotoForm
+from .forms import PhotoForm, IconForm
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 
@@ -52,3 +52,21 @@ def photos_category(request, category):
     category = Category.objects.get(title=category)
     photos = Photo.objects.filter(category=category).order_by('-created_at')
     return render(request, 'app/index.html', {'photos': photos, 'category':category})
+
+
+@login_required
+def icon_new(request):
+    if request.method == "POST":
+        form = IconForm(request.POST, request.FILES)
+        if form.is_valid():
+            # 既存のアイコンを削除
+            Icon.objects.filter(user=request.user).delete()
+            # 新しいアイコンを保存
+            icon = form.save(commit=False)
+            icon.user = request.user
+            icon.save()
+            messages.success(request, "投稿が完了しました！")
+        return redirect('app:users_detail', pk=request.user.pk)
+    else:
+        form = IconForm()
+    return render(request, 'app/icon_new.html', {'form': form})

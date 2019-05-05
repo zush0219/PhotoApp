@@ -9,4 +9,5 @@ urlpatterns = [
     path('photos/<int:pk>/', views.photos_detail, name='photos_detail'),
     path('photos/<int:pk>/delete/', views.photos_delete, name='photos_delete'),
     path('photos/<str:category>/', views.photos_category, name='photos_category'),
+    path('icon_new/', views.icon_new, name='icon_new'),
 ]
