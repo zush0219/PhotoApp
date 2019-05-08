@@ -8,7 +8,7 @@
         <a href="{% url 'app:users_detail' photo.user.id %}">
             <div class="photo-info">
                 <div class="icon-and-name">
-                    <p><img src="{{ photo.user.icon.image.url }}" class="icon-img"></p>
+                    <p><img src="{{ photo.user.icon.image.url }}" onerror="this.onerror=null;this.src='/media/icons/default.jpg'" class="icon-img"></p>
                     <p>{{ photo.user.username }}</p>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         {% for comment in comments %}
         <div>
             <div class="icon-and-name">
-                <p><img src="{{ comment.user.icon.image.url }}" class="icon-img"></p>
+                <p><img src="{{ comment.user.icon.image.url }}" onerror="this.onerror=null;this.src='/media/icons/default.jpg'" class="icon-img"></p>
                 <p>{{ comment.user }}</p>
             </div>
             <p class="comment-text">{{ comment.text }}</p>

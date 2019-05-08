@@ -110,10 +110,10 @@ header h1 {
     border: 1px solid ;
 }
 
-.photo-info .icon-img {
+#index .icon-img {
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border: 1px solid ;
 }
 

@@ -2,12 +2,16 @@
 
 {% block content %}
 
-<h2>トップページ</h2>
+<div id="index">
 
-{% if category %}
-    <h2>カテゴリー：{{ category.title }} の検索結果</h2>
-{% endif %}
+    <h2>トップページ</h2>
 
-{% include 'app/photos_list.html' %}
+    {% if category %}
+        <h2>カテゴリー：{{ category.title }} の検索結果</h2>
+    {% endif %}
+
+    {% include 'app/photos_list.html' %}
+
+</div>
 
 {% endblock %}
